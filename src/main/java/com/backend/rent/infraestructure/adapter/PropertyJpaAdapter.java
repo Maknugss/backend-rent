@@ -58,4 +58,9 @@ public class PropertyJpaAdapter implements PropertyPersistencePort {
         return propertyDBMapper.toDomain(propertyEntityGot.get());
     }
 
+    @Override
+    public int countPropertyByName(String name) {
+        return propertyRepository.countByName(name);
+    }
+
 }

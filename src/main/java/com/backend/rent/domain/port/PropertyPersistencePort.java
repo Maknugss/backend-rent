@@ -13,4 +13,5 @@ public interface PropertyPersistencePort {
     
     Property getPropertyById(Long propertyId);
 
+    int countPropertyByName(String name);
 }

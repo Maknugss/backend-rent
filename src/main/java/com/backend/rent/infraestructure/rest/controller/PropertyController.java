@@ -3,8 +3,10 @@ package com.backend.rent.infraestructure.rest.controller;
 import com.backend.rent.application.usecases.PropertyService;
 import com.backend.rent.domain.model.dto.PropertyDto;
 import com.backend.rent.domain.model.dto.request.PropertyRequest;
+import com.backend.rent.infraestructure.rest.advice.BasicInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class PropertyController {
     }
 
     @PostMapping()
-    public PropertyDto createNewProperty(@RequestBody PropertyRequest propertyRequest){
+    public PropertyDto createNewProperty(@Validated(BasicInfo.class) @RequestBody PropertyRequest propertyRequest){
         return propertyService.createNewProperty(propertyRequest);
     }
 
@@ -41,7 +43,7 @@ public class PropertyController {
     }
 
     @PutMapping()
-    public PropertyDto updateProperty(@RequestBody PropertyRequest propertyRequest){
+    public PropertyDto updateProperty(@Validated(BasicInfo.class) @RequestBody PropertyRequest propertyRequest){
         return propertyService.updateProperty(propertyRequest);
     }
 

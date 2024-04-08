@@ -1,6 +1,8 @@
 package com.backend.rent.domain.model;
 
-import java.time.LocalDate;
+import com.backend.rent.infraestructure.adapter.exception.PropertyException;
+import org.springframework.http.HttpStatus;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -90,4 +92,23 @@ public class Property {
         Date thirtyDaysAgo = calendar.getTime();
         return this.createdDate.after(thirtyDaysAgo);
     }
+
+    public void validateLocation(){
+        if(!this.location.equals("Medellin") && !this.location.equals("Bogota") && !this.location.equals("Cartagena") && !this.location.equals("Cali")){
+            throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede crear una propiedad con ubicación diferente a Medellin, Bogota, Cartagena o Cali");
+        }
+    }
+
+    public void validatePriceGreaterThanZero(){
+        if(this.price < 0){
+            throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede crear una propiedad con precio negativo");
+        }
+    }
+
+    public void validatePriceBogotaAndCali(){
+        if((this.location.equals("Bogota") || this.location.equals("Cali")) && this.price < 2000000L){
+            throw new PropertyException(HttpStatus.BAD_REQUEST, "En " + this.location + " no se puede poner un precio menor a 2'000.000");
+        }
+    }
+
 }

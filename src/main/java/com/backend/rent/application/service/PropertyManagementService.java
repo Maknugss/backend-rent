@@ -34,7 +34,13 @@ public class PropertyManagementService implements PropertyService {
 
     @Override
     public PropertyDto createNewProperty(PropertyRequest propertyRequest) {
-        Property propertyToCreate = propertyRequestMapper.toDto(propertyRequest);
+        Property propertyToCreate = propertyRequestMapper.toDomain(propertyRequest);
+        if(propertyPersistencePort.countPropertyByName(propertyToCreate.getName()) >= 1){
+            throw new PropertyException(HttpStatus.BAD_REQUEST, "Ya existe una propiedad con este nombre");
+        }
+        propertyToCreate.validateLocation();
+        propertyToCreate.validatePriceGreaterThanZero();
+        propertyToCreate.validatePriceBogotaAndCali();
         Property propertyCreated = propertyPersistencePort.createNewOrUpdateProperty(propertyToCreate);
         return propertyDtoMapper.toDto(propertyCreated);
     }
@@ -42,10 +48,10 @@ public class PropertyManagementService implements PropertyService {
     @Override
     public void deletePropertyById(Long propertyId) {
         Property property = propertyPersistencePort.getPropertyById(propertyId);
-        if(property.isLessTo30Day()){
-            propertyPersistencePort.deleteProperty(property);
+        if(!property.isLessTo30Day()){
+            throw new PropertyException(HttpStatus.BAD_REQUEST, "La propiedad que se desea eliminar supera los 30 días");
         }
-        else throw new PropertyException(HttpStatus.BAD_REQUEST, "La propiedad que se desea eliminar supera los 30 días");
+        propertyPersistencePort.deleteProperty(property);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class PropertyManagementService implements PropertyService {
 
     @Override
     public PropertyDto updateProperty(PropertyRequest propertyRequest) {
-        Property propertyToUpdate = propertyRequestMapper.toDto(propertyRequest);
+        Property propertyToUpdate = propertyRequestMapper.toDomain(propertyRequest);
         Property currentProperty = propertyPersistencePort.getPropertyById(propertyToUpdate.getPropertyId());
         if(!currentProperty.getAvailability() && !currentProperty.getLocation().equals(propertyToUpdate.getLocation())){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede modificar la ubicación de una propiedad rentada");
@@ -66,9 +72,7 @@ public class PropertyManagementService implements PropertyService {
         if(!currentProperty.getAvailability() && !currentProperty.getPrice().equals(propertyToUpdate.getPrice())){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede modificar el precio de una propiedad rentada");
         }
-        if((propertyToUpdate.getLocation().equals("Bogota") || propertyToUpdate.getLocation().equals("Cali")) && propertyToUpdate.getPrice() < 2000000L){
-            throw new PropertyException(HttpStatus.BAD_REQUEST, "En " + propertyToUpdate.getLocation() + " no se puede poner un precio menor a 2'000.000");
-        }
+        propertyToUpdate.validatePriceBogotaAndCali();
         Property propertyUpdated = propertyPersistencePort.createNewOrUpdateProperty(propertyToUpdate);
         return propertyDtoMapper.toDto(propertyUpdated);
     }

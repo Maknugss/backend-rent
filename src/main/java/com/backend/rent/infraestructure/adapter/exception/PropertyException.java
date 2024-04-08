@@ -9,6 +9,8 @@ public class PropertyException extends RuntimeException{
     private HttpStatus errorCode;
     private String errorMessage;
 
+    private Throwable throwableTrace;
+
     public PropertyException() {
     }
 
@@ -16,6 +18,13 @@ public class PropertyException extends RuntimeException{
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
+
+    public PropertyException(HttpStatus errorCode, String errorMessage, Throwable throwableTrace) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+        this.throwableTrace = throwableTrace;
+    }
+
 
     public HttpStatus getErrorCode() {
         return errorCode;

@@ -1,12 +1,27 @@
 package com.backend.rent.domain.model.dto.request;
 
+import com.backend.rent.infraestructure.rest.advice.BasicInfo;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class PropertyRequest {
 
     private Long propertyId;
+    @NotBlank(groups = BasicInfo.class, message = "El nombre no puede estar en blando")
+    @NotNull(groups = BasicInfo.class, message = "El nombre no puede ser null")
     private String name;
+    @NotBlank(groups = BasicInfo.class, message = "La ubicación no puede estar vacia")
+    @NotNull(groups = BasicInfo.class, message = "La ubicación no puede ser null")
     private String location;
+
+    @NotNull(groups = BasicInfo.class, message = "La disponibilidad no puede ser null")
     private Boolean availability;
+
+    @NotBlank(groups = BasicInfo.class, message = "la url de la imagen no puede estar vacia")
+    @NotNull(groups = BasicInfo.class, message = "La url de la imagen no puede ser null")
     private String pictureUrl;
+
+    @NotNull(groups = BasicInfo.class, message = "El precio no puede ser nulo")
     private Long price;
 
     public PropertyRequest() {

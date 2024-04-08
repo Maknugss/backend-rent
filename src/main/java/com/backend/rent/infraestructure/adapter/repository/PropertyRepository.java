@@ -10,4 +10,6 @@ import java.util.List;
 public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> {
 
     List<PropertyEntity> findAllByPriceBetweenAndAvailabilityIsTrueAndDeletedIsFalse(Long minPrice, Long maxPrice);
+
+    int countByName(String name);
 }
