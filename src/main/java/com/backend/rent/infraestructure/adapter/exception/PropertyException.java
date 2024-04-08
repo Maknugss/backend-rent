@@ -4,12 +4,9 @@ import org.springframework.http.HttpStatus;
 
 public class PropertyException extends RuntimeException{
 
-    private static final long serialVersionUID = 1L;
-
     private HttpStatus errorCode;
     private String errorMessage;
 
-    private Throwable throwableTrace;
 
     public PropertyException() {
     }
@@ -17,12 +14,6 @@ public class PropertyException extends RuntimeException{
     public PropertyException(HttpStatus errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
-    }
-
-    public PropertyException(HttpStatus errorCode, String errorMessage, Throwable throwableTrace) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
-        this.throwableTrace = throwableTrace;
     }
 
 

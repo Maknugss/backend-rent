@@ -4,8 +4,6 @@ import com.backend.rent.application.usecases.PropertyService;
 import com.backend.rent.domain.model.dto.PropertyDto;
 import com.backend.rent.domain.model.dto.request.PropertyRequest;
 import com.backend.rent.infraestructure.rest.advice.BasicInfo;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,6 @@ import java.util.List;
 @RequestMapping("/property")
 public class PropertyController {
 
-    private static final Logger LOGGER = LogManager.getLogger(PropertyController.class);
     private final PropertyService propertyService;
 
     public PropertyController(PropertyService propertiesService) {

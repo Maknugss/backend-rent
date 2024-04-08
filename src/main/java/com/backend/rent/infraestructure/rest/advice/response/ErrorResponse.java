@@ -1,8 +1,6 @@
 package com.backend.rent.infraestructure.rest.advice.response;
 
 
-import java.util.Map;
-
 public class ErrorResponse {
     private String message;
     private int statusCode;

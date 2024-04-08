@@ -66,10 +66,10 @@ public class PropertyManagementService implements PropertyService {
     public PropertyDto updateProperty(PropertyRequest propertyRequest) {
         Property propertyToUpdate = propertyRequestMapper.toDomain(propertyRequest);
         Property currentProperty = propertyPersistencePort.getPropertyById(propertyToUpdate.getPropertyId());
-        if(!currentProperty.getAvailability() && !currentProperty.getLocation().equals(propertyToUpdate.getLocation())){
+        if(Boolean.TRUE.equals(!currentProperty.getAvailability()) && !currentProperty.getLocation().equals(propertyToUpdate.getLocation())){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede modificar la ubicación de una propiedad rentada");
         }
-        if(!currentProperty.getAvailability() && !currentProperty.getPrice().equals(propertyToUpdate.getPrice())){
+        if(Boolean.TRUE.equals(!currentProperty.getAvailability()) && !currentProperty.getPrice().equals(propertyToUpdate.getPrice())){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede modificar el precio de una propiedad rentada");
         }
         propertyToUpdate.validatePriceBogotaAndCali();

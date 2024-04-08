@@ -3,7 +3,6 @@ package com.backend.rent.infraestructure.rest.advice;
 import com.backend.rent.infraestructure.adapter.exception.PropertyException;
 import com.backend.rent.infraestructure.rest.advice.response.ErrorResponse;
 import com.backend.rent.infraestructure.rest.advice.response.ErrorResponseMap;
-import com.backend.rent.infraestructure.rest.controller.PropertyController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import java.util.Map;
 @RestControllerAdvice(annotations = RestController.class)
 public class ControllerAdvice {
 
-    private static final Logger LOGGER = LogManager.getLogger(PropertyController.class);
+    private static final Logger LOGGER = LogManager.getLogger(ControllerAdvice.class);
 
     @ExceptionHandler(PropertyException.class)
     public ResponseEntity<ErrorResponse> handleInput(PropertyException propertyException){
