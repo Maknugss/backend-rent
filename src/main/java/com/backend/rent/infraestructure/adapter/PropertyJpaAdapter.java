@@ -51,7 +51,7 @@ public class PropertyJpaAdapter implements PropertyPersistencePort {
 
     @Override
     public Property getPropertyById(Long propertyId) {
-        Optional<PropertyEntity> propertyEntityGot = propertyRepository.findById(propertyId);
+        Optional<PropertyEntity> propertyEntityGot = propertyRepository.findByPropertyIdAndDeletedIsFalse(propertyId);
         if(propertyEntityGot.isEmpty()){
             throw new PropertyException(HttpStatus.NOT_FOUND, "No se logro encontrar la propiedad que se desea consultar con id " + propertyId);
         }
@@ -60,7 +60,7 @@ public class PropertyJpaAdapter implements PropertyPersistencePort {
 
     @Override
     public int countPropertyByName(String name) {
-        return propertyRepository.countByName(name);
+        return propertyRepository.countByNameAndDeletedIsFalse(name);
     }
 
 }

@@ -1,20 +1,22 @@
-package com.backend.rent.infraestructure.rest.advice.response;
+package com.backend.rent.infraestructure.rest.response;
 
+import java.util.Map;
 
-public class ErrorResponse {
-    private String message;
+public class ErrorResponseMap {
+
+    Map<String, String> message;
     private int statusCode;
 
-    public ErrorResponse(String message, int statusCode) {
+    public ErrorResponseMap(Map<String, String> message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
     }
 
-    public String getMessage() {
+    public Map<String, String> getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Map<String, String> message) {
         this.message = message;
     }
 

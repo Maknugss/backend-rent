@@ -1,8 +1,8 @@
 package com.backend.rent.infraestructure.rest.advice;
 
 import com.backend.rent.infraestructure.adapter.exception.PropertyException;
-import com.backend.rent.infraestructure.rest.advice.response.ErrorResponse;
-import com.backend.rent.infraestructure.rest.advice.response.ErrorResponseMap;
+import com.backend.rent.infraestructure.rest.response.ErrorResponse;
+import com.backend.rent.infraestructure.rest.response.ErrorResponseMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;

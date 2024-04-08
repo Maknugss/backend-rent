@@ -5,11 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> {
 
     List<PropertyEntity> findAllByPriceBetweenAndAvailabilityIsTrueAndDeletedIsFalse(Long minPrice, Long maxPrice);
 
-    int countByName(String name);
+    int countByNameAndDeletedIsFalse(String name);
+
+    Optional<PropertyEntity> findByPropertyIdAndDeletedIsFalse(Long propertyId);
 }
