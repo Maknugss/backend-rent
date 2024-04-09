@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.backend.rent.domain.model.constant.Constants.*;
+
 public class Property {
     private Long propertyId;
     private String name;
@@ -88,25 +90,25 @@ public class Property {
         Date currentDay = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDay);
-        calendar.add(Calendar.DAY_OF_MONTH, -30);
+        calendar.add(Calendar.DAY_OF_MONTH, -MINDAYTODELETE);
         Date thirtyDaysAgo = calendar.getTime();
         return this.createdDate.after(thirtyDaysAgo);
     }
 
     public void validateLocation(){
-        if(!this.location.equals("Medellin") && !this.location.equals("Bogota") && !this.location.equals("Cartagena") && !this.location.equals("Cali")){
+        if(!this.location.equals(MEDELLIN) && !this.location.equals(BOGOTA) && !this.location.equals(CARTAGENA) && !this.location.equals(CALI)){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede crear una propiedad con ubicación diferente a Medellin, Bogota, Cartagena o Cali");
         }
     }
 
     public void validatePriceGreaterThanZero(){
-        if(this.price < 0){
+        if(this.price < MINPRICE){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "No se puede crear una propiedad con precio negativo");
         }
     }
 
     public void validatePriceBogotaAndCali(){
-        if((this.location.equals("Bogota") || this.location.equals("Cali")) && this.price < 2000000L){
+        if((this.location.equals(BOGOTA) || this.location.equals(CALI)) && this.price < MINPRICEBOGOTAANDCALI){
             throw new PropertyException(HttpStatus.BAD_REQUEST, "En " + this.location + " no se puede poner un precio menor a 2'000.000");
         }
     }
