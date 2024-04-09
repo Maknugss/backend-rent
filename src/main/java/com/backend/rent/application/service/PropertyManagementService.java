@@ -76,4 +76,5 @@ public class PropertyManagementService implements PropertyService {
         Property propertyUpdated = propertyPersistencePort.createNewOrUpdateProperty(propertyToUpdate);
         return propertyDtoMapper.toDto(propertyUpdated);
     }
+
 }
