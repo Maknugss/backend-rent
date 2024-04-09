@@ -55,9 +55,7 @@ class PropertyTest {
         property.setLocation(MEDELLIN);
 
         // When & Then
-        assertDoesNotThrow(() -> {
-            property.validateLocation();
-        });
+        assertDoesNotThrow(property::validateLocation);
     }
 
     @Test
@@ -67,9 +65,7 @@ class PropertyTest {
         property.setLocation("InvalidLocation");
 
         // When & Then
-        assertThrows(PropertyException.class, () -> {
-            property.validateLocation();
-        });
+        assertThrows(PropertyException.class, property::validateLocation);
     }
 
     @Test
@@ -79,9 +75,7 @@ class PropertyTest {
         property.setPrice(100L);
 
         // When & Then
-        assertDoesNotThrow(() -> {
-            property.validatePriceGreaterThanZero();
-        });
+        assertDoesNotThrow(property::validatePriceGreaterThanZero);
     }
 
     @Test
@@ -91,9 +85,7 @@ class PropertyTest {
         property.setPrice(-100L);
 
         // When & Then
-        assertThrows(PropertyException.class, () -> {
-            property.validatePriceGreaterThanZero();
-        });
+        assertThrows(PropertyException.class, property::validatePriceGreaterThanZero);
     }
 
     @Test
@@ -104,9 +96,7 @@ class PropertyTest {
         property.setPrice(2000000L);
 
         // When & Then
-        assertDoesNotThrow(() -> {
-            property.validatePriceBogotaAndCali();
-        });
+        assertDoesNotThrow(property::validatePriceBogotaAndCali);
     }
 
     @Test
@@ -117,8 +107,6 @@ class PropertyTest {
         property.setPrice(1000000L);
 
         // When & Then
-        assertThrows(PropertyException.class, () -> {
-            property.validatePriceBogotaAndCali();
-        });
+        assertThrows(PropertyException.class, property::validatePriceBogotaAndCali);
     }
 }
